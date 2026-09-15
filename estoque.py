@@ -1,6 +1,3 @@
-from datetime import date
-
-
 class Lote:
     def __init__(self, nome_produto, preco_compra, preco_venda, data_compra, data_vencimento, quantidade):
         self.nome_produto = nome_produto
