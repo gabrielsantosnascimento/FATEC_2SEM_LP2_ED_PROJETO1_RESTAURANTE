@@ -24,7 +24,7 @@ class FilaDeLotes:
             total += lote.quantidade
         return total
 
-        def retirar_e_calcular_valor(self, quantidade):
+    def retirar_e_calcular_valor(self, quantidade):
         if self.quantidade_total() < quantidade:
             return False, 0
 
@@ -67,7 +67,7 @@ class Estoque:
         lote = Lote(nome_produto, preco_compra, preco_venda, data_compra, data_vencimento, quantidade)
         self._produtos[nome_produto].enfileirar(lote)
 
-        def dar_baixa(self, nome_produto, quantidade):
+    def dar_baixa(self, nome_produto, quantidade):
         if nome_produto not in self._produtos:
             return False, 0
         return self._produtos[nome_produto].retirar_e_calcular_valor(quantidade)
