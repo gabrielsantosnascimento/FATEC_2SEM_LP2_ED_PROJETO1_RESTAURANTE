@@ -24,23 +24,27 @@ class FilaDeLotes:
             total += lote.quantidade
         return total
 
-    def desenfileirar_quantidade(self, quantidade):
+        def retirar_e_calcular_valor(self, quantidade):
         if self.quantidade_total() < quantidade:
-            return False
+            return False, 0
 
         restante = quantidade
+        valor_total = 0
+
         while restante > 0:
             lote = self._itens[0]
 
             if lote.quantidade > restante:
+                valor_total += restante * lote.preco_venda
                 lote.quantidade -= restante
                 restante = 0
             else:
+                valor_total += lote.quantidade * lote.preco_venda
                 restante -= lote.quantidade
                 lote.quantidade = 0
                 self._itens.pop(0)
 
-        return True
+        return True, valor_total
 
     def editar_quantidade(self, posicao, nova_quantidade):
         if posicao < 0 or posicao >= len(self._itens):
@@ -63,10 +67,10 @@ class Estoque:
         lote = Lote(nome_produto, preco_compra, preco_venda, data_compra, data_vencimento, quantidade)
         self._produtos[nome_produto].enfileirar(lote)
 
-    def dar_baixa(self, nome_produto, quantidade):
+        def dar_baixa(self, nome_produto, quantidade):
         if nome_produto not in self._produtos:
-            return False
-        return self._produtos[nome_produto].desenfileirar_quantidade(quantidade)
+            return False, 0
+        return self._produtos[nome_produto].retirar_e_calcular_valor(quantidade)
 
     def consultar_quantidade(self, nome_produto):
         if nome_produto not in self._produtos:
